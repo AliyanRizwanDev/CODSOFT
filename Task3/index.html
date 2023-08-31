@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/9dd4dc3dde.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Calculator</title>
+</head>
+<body>
+    <center>
+    <div class="cal">
+        <div class="display"><h1 id="display-text">0</h1></div>
+        <div class="grid-all">
+            <div class="btn btn-primary" onclick="calculate('1')">1</div>
+            <div class="btn btn-primary" onclick="calculate('2')">2</div>
+            <div class="btn btn-primary" onclick="calculate('+')">+</div>
+            <div class="btn btn-primary" onclick="calculate('3')">3</div>
+            <div class="btn btn-primary" onclick="calculate('4')">4</div>
+            <div class="btn btn-primary" onclick="calculate('-')">-</div>
+            <div class="btn btn-primary" onclick="calculate('5')">5</div>
+            <div class="btn btn-primary" onclick="calculate('6')">6</div>
+            <div class="btn btn-primary" onclick="calculate('/')">/</div>
+            <div class="btn btn-primary" onclick="calculate('7')">7</div>
+            <div class="btn btn-primary" onclick="calculate('8')">8</div>
+            <div class="btn btn-primary" onclick="calculate('*')">*</div>
+            <div class="btn btn-primary" onclick="calculate('9')">9</div>
+            <div class="btn btn-primary" onclick="calculate('0')">0</div>
+            <div class="btn btn-primary" onclick="reset()">Clear</div>
+            <div class="btn btn-primary" onclick="calculate('.')">.</div>
+            <div class="btn btn-primary" onclick="calculate('=')">=</div>
+        </div>
+    </div>
+    </center>
+</body>
+</html>
+<script>
+    let currentInput = '';
+    let currentResult = '';
+    let operator = '';
+
+    function reset() {
+        currentInput = '';
+        currentResult = '';
+        operator = '';
+        updateDisplay();
+    }
+
+    function calculate(value) {
+        if (value === '=') {
+            if (currentInput !== '') {
+                currentResult = eval(currentResult + operator + currentInput);
+                currentInput = '';
+                operator = '';
+                updateDisplay();
+            }
+        } else if (value === '+' || value === '-' || value === '*' || value === '/') {
+            if (currentInput !== '') {
+                if (currentResult === '') {
+                    currentResult = currentInput;
+                } else {
+                    currentResult = eval(currentResult + operator + currentInput);
+                }
+                operator = value;
+                currentInput = '';
+                updateDisplay();
+            }
+        } else {
+            currentInput += value;
+            updateDisplay();
+        }
+    }
+
+    function updateDisplay() {
+        const display = document.getElementById('display-text');
+        display.innerText = currentInput !== '' ? currentInput : currentResult !== '' ? currentResult : '0';
+    }
+</script>
